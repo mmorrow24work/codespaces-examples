@@ -14,6 +14,9 @@ GitHub Codespaces are a great idea, but you are probably better off hosting your
 - **Port forwarding**: Auto-detects `localhost:PORT`, creates public URLs, opens browser [docs.github](https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace)
 - **VS Code native**: Browser or desktop VS Code with full extension support
 - **Multi-VM sizes**: 2-core/8GB → 32-core/128GB, pay-per-use after free quota
+- A codespace will suspend after a period of inactivity. You can specify a default idle timeout value, which will apply to all codespaces created after the default is changed. You will be charged for the entire time your codespace is running, even if it is idle. The maximum value is 240 minutes (4 hours).
+- Inactive codespaces are automatically deleted 30 days after the last time they were stopped. A shorter retention period can be set, and will apply to all codespaces created going forward. The default and maximum value is 30 days.
+- Your default region will be used to designate compute resources to your codespaces. GitHub can set your region automatically based on your location, or you can set it yourself. Codespaces are deployed to a subset of Azure regions.
 
 ## Pricing (March 2026)
 | Plan | Core-hours/month | Storage | Notes |
@@ -42,9 +45,9 @@ Key for network engineers: validates data, syncs disparate sources, enables inte
 
 1. Create your own codespace using this repo - or fork the repo if you want to make changes.
 2. Codespaces allow you to test code for free, you get ~30hr on a 4-core machine.
-3. Create your new Codespaces instance using the options shown in the screenshot below ...
-4. The first time we start nautobot, we need to run `createsuperuser` from the vscode terminal to setup a Login and Password ( in the example we used admin / admin but feel free to use whatever you prefer )
-5. From the vscode terminal we can open the Web UI and login
+3. Create your new Codespaces instance using the options shown in the screenshot below.
+4. The first time we start nautobot, we need to run `createsuperuser` from the vscode terminal to setup a Login and Password ( in the example we used admin / admin but feel free to use whatever you prefer ).
+5. From the vscode terminal we can open the Nautobot web UI and login.
 6. Lastly we can rename the Codespaces instance, or delete it when we are done etc.
 
 <img width="654" height="396" alt="image" src="https://github.com/user-attachments/assets/27dd4bc7-cb8c-47a7-bf9e-880de9688986" />
