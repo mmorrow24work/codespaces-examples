@@ -34,6 +34,7 @@ Repo → Codespace → /workspaces/repo → VS Code → docker compose up → Po
 
 <img width="1100" height="237" alt="image" src="https://github.com/user-attachments/assets/834fddf4-383e-4f52-b119-b59a7cfa4f67" />
 
+---
 
 **Nautobot** is an open-source Network Source of Truth (NSoT) and automation platform, forked from NetBox. [networktocode](https://networktocode.com/nautobot/)
 
