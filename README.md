@@ -75,4 +75,6 @@ Superuser created successfully.
 <img width="856" height="435" alt="image" src="https://github.com/user-attachments/assets/a7dc3c5c-01ac-4f82-bd5e-061d3d971080" />
 <img width="2566" height="1398" alt="image" src="https://github.com/user-attachments/assets/9d259763-4896-40b0-a67e-b7116e47c78c" />
 
+<img width="562" height="496" alt="image" src="https://github.com/user-attachments/assets/9f98b6b8-dde7-4e6d-b9f1-e66048d9e827" />
+<img width="562" height="496" alt="image" src="https://github.com/user-attachments/assets/9f98b6b8-dde7-4e6d-b9f1-e66048d9e827" />
 
