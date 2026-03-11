@@ -85,4 +85,20 @@ Superuser created successfully.
 <img width="559" height="496" alt="image" src="https://github.com/user-attachments/assets/853f4548-4c1e-46a9-83c3-701f72798804" />
 <img width="437" height="253" alt="image" src="https://github.com/user-attachments/assets/c7e4fa3e-f3c8-4177-ad17-1c3652dfcf93" />
 
+---
+
+# Zabbix 
+
+<img width="500" height="131" alt="image" src="https://github.com/user-attachments/assets/38ecbe61-7ec3-4e7b-b769-9113ec0d1f17" />
+
+---
+
+**Zabbix** is enterprise-grade open-source monitoring software for networks, servers, cloud, and applications. [zabbix](https://www.zabbix.com/features)
+
+Key capabilities (100 words):
+- **Data collection**: SNMP, IPMI, JMX, agent/polling, log monitoring, HTTP endpoints, cloud APIs (AWS/Azure/GCP)
+- **Smart alerting**: Baseline anomaly detection, predictive thresholds, flapping protection, root cause analysis
+- **Visualization**: Real-time graphs, geo-maps, dashboards, inventory tracking
+- **Automation**: Auto-discovery, synthetic web transactions, auto-remediation scripts, Zabbix proxies
+- **Scalability**: Handles millions of metrics, multi-tenant, high-frequency polling (1s intervals)
 
