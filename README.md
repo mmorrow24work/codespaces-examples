@@ -38,12 +38,12 @@ Repo → Codespace → /workspaces/repo → VS Code → docker compose up → Po
 
 **Nautobot** is an open-source Network Source of Truth (NSoT) and automation platform, forked from NetBox. [networktocode](https://networktocode.com/nautobot/)
 
-It serves three core functions:
+Key capabilities :
 - **Source of Truth**: Models network infrastructure (devices, IPs, cables, racks) with custom fields/relationships
 - **Automation Platform**: REST/GraphQL APIs, Git integration, webhooks drive Ansible/Terraform workflows
 - **App Ecosystem**: Extensible plugin system for custom models, jobs, and integrations
 
-Key for network engineers: validates data, syncs disparate sources, enables intent-based networking, and supports multi-vendor device modeling with dynamic config generation.[](https://networktocode.com/nautobot/)[](https://docs.nautobot.com/projects/core/en/stable/)
+Key for network engineers: Nautobot validates data, syncs disparate sources, enables intent-based networking, and supports multi-vendor device modeling with dynamic config generation.[](https://networktocode.com/nautobot/)[](https://docs.nautobot.com/projects/core/en/stable/)
 
 ## Codespaces notes
 
@@ -95,10 +95,16 @@ Superuser created successfully.
 
 **Zabbix** is enterprise-grade open-source monitoring software for networks, servers, cloud, and applications. [zabbix](https://www.zabbix.com/features)
 
-Key capabilities (100 words):
+Key capabilities :
 - **Data collection**: SNMP, IPMI, JMX, agent/polling, log monitoring, HTTP endpoints, cloud APIs (AWS/Azure/GCP)
 - **Smart alerting**: Baseline anomaly detection, predictive thresholds, flapping protection, root cause analysis
 - **Visualization**: Real-time graphs, geo-maps, dashboards, inventory tracking
 - **Automation**: Auto-discovery, synthetic web transactions, auto-remediation scripts, Zabbix proxies
 - **Scalability**: Handles millions of metrics, multi-tenant, high-frequency polling (1s intervals)
 
+Key for network engineers: Zabbix delivers agentless monitoring across entire infrastructures without touching every device.
+- SNMP mastery: Monitors routers/switches (Cisco, Juniper, Arista) via industry-standard SNMPv3—no agents needed
+- Auto-discovery: Scans IP ranges, finds new devices, applies vendor templates automatically
+- Real-time bandwidth: Tracks interface utilization, errors, discards, MTU issues instantly
+- Network topology maps: Visualizes Layer 2/3 connectivity with live status indicators
+- Proxies for scale: Monitors remote sites/DMZ behind firewalls without VPNs
