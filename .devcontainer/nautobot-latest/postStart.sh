@@ -3,9 +3,7 @@ set -euo pipefail
 
 echo "logs:/workspaces/.codespaces/.persistedshare" > nautobot-only.txt
 echo "User=admin / Password=admin" >> nautobot-only.txt
-echo "docker exec -it nautobot-lab nautobot-server createsuperuser" >> nautobot-only.txt
-
-docker run -itd --name nautobot-lab -p 8082:8000 --hostname nautobot-lab.local networktocode/nautobot-lab
+echo "docker exec -it nautobot_docker_compose-nautobot-1 nautobot-server createsuperuser" >> nautobot-only.txt
 
 # URLs (Codespaces auto-forwards)
 echo "Nautobot UI: http://localhost:8082"
