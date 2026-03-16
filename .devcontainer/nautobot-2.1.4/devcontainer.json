@@ -15,7 +15,7 @@
       "visibility": "public"
     }
   },
-  "postCreateCommand": "bash .devcontainer/nautobot/postCreate.sh",
-  "postStartCommand": "bash .devcontainer/nautobot/postStart.sh",
+  "postCreateCommand": "bash .devcontainer/nautobot-2.1.4/postCreate.sh",
+  "postStartCommand": "bash .devcontainer/nautobot-2.1.4/postStart.sh",
   "remoteUser": "vscode"
 }
