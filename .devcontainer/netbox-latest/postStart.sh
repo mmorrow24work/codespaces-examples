@@ -3,6 +3,8 @@ set -euo pipefail
 
 echo "logs:/workspaces/.codespaces/.persistedshare" > netbox-only.txt
 echo "User=netbox / Password=pdEpsCzU9K8D!" >> netbox-only.txt
+echo "docker compose down" >> netbox-only.txt
+echo "docker compose up -d" >> netbox-only.txt
 
 # URLs (Codespaces auto-forwards)
 echo "Netbox UI: http://localhost:8000"
