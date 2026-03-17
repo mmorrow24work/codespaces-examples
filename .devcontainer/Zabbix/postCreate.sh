@@ -7,4 +7,4 @@ sudo apt-get install -y curl jq git htop btop eza
 # Clone zabbix repos
 mkdir -p git
 cd git
-test -d zabbix-docker || git clone https://github.com/zabbix/zabbix-docker.git
+git clone https://github.com/zabbix/zabbix-docker.git
