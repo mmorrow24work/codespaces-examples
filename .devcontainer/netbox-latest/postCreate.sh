@@ -126,12 +126,11 @@ EOF
 
 docker compose up -d
 docker ps
-echo "sleep 60..."
-sleep 60
+echo "sleep 300..."
+sleep 300
+docker compose down
+docker compose up -d
 docker ps
-echo "sleep 60..."
-sleep 60
-docker ps
-echo "sleep 60..."
-sleep 60
+echo "sleep 300..."
+sleep 300
 docker ps
