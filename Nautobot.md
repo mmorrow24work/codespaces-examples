@@ -21,7 +21,8 @@ Key for network engineers: Nautobot validates data, syncs disparate sources, ena
 6. Lastly we can rename the Codespaces instance, or delete it when we are done etc.
 
 <img width="654" height="396" alt="image" src="https://github.com/user-attachments/assets/27dd4bc7-cb8c-47a7-bf9e-880de9688986" />
-<img width="740" height="361" alt="image" src="https://github.com/user-attachments/assets/57a70101-c9fc-4afd-809b-6ad3ad20ea18" />
+<img width="893" height="415" alt="image" src="https://github.com/user-attachments/assets/17114c1c-2131-4303-aea2-e00c054796e6" />
+
 
 
 ```bash
