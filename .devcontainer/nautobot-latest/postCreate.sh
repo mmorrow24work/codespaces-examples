@@ -78,6 +78,10 @@ MYSQL_DATABASE=nautobot
 NAUTOBOT_AUTH_LDAP_SERVER_URI="changeme"
 NAUTOBOT_AUTH_LDAP_BIND_DN="changeme"
 NAUTOBOT_AUTH_LDAP_BIND_PASSWORD="changeme"
+
+# CSRF_TRUSTED_ORIGINS is a Django security setting that protects against Cross-Site Request Forgery (CSRF) attacks.
+NAUTOBOT_CSRF_TRUSTED_ORIGINS=http://localhost:8080,http://127.0.0.1:8080
+NAUTOBOT_CORS_ALLOWED_ORIGINS=http://localhost:8080,http://127.0.0.1:8080
 EOF
 
 # Install NAUTOBOT 
