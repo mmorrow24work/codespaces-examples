@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Update package index and install linux useful Linix packages
+# Update package index and install linux useful Linux packages
 sudo apt-get update
 sudo apt-get install -y curl jq git htop btop eza
 
