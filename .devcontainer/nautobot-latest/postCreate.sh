@@ -92,6 +92,10 @@ eval "$(poetry env activate)"  # Activates current shell (prints source command 
 invoke build
 invoke start
 docker ps
+echo "sleep 60..."
 sleep 60
-invoke restart
-docker ps
+echo "sleep 60......"
+sleep 60
+echo "sleep 60........."
+sleep 60
+
