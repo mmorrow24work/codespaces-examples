@@ -7,90 +7,125 @@ sudo apt-get install -y curl jq git htop btop eza
 
 # Clone official nautobot repo
 mkdir git && cd git 
-git clone https://github.com/nautobot/nautobot-docker-compose.git
-cd nautobot-docker-compose
+git clone https://github.com/netbox-community/netbox-docker.git
+cd netbox-docker
 
-# Modify env files
-cat > environments/creds.env << 'EOF'
-NAUTOBOT_CREATE_SUPERUSER=true
-NAUTOBOT_DB_PASSWORD=nautobot123
-NAUTOBOT_NAPALM_USERNAME=''
-NAUTOBOT_NAPALM_PASSWORD=''
-NAUTOBOT_REDIS_PASSWORD=redis123
-NAUTOBOT_SECRET_KEY=012345678901234567890123456789012345678901234567890123456789
-NAUTOBOT_SUPERUSER_NAME=admin
-NAUTOBOT_SUPERUSER_EMAIL=admin@example.com
-NAUTOBOT_SUPERUSER_PASSWORD=admin
-# API token length must be exactly 40 characters
-NAUTOBOT_SUPERUSER_API_TOKEN=0123456789abcdef0123456789abcdef01234567
-
-NAUTOBOT_CACHEOPS_REDIS=redis://:${NAUTOBOT_REDIS_PASSWORD}@redis:6379/1
-
-# Postgres
-POSTGRES_PASSWORD=${NAUTOBOT_DB_PASSWORD}
-PGPASSWORD=${NAUTOBOT_DB_PASSWORD}
-
-# MySQL
-MYSQL_PASSWORD=${NAUTOBOT_DB_PASSWORD}
-MYSQL_ROOT_PASSWORD=${NAUTOBOT_DB_PASSWORD}
-
-# REDIS
-REDIS_PASSWORD=${NAUTOBOT_REDIS_PASSWORD}
+# Modify docker files
+cat > docker-compose.override.yml << 'EOF'
+services:
+  netbox:
+    image: netbox:latest-plugins
+    pull_policy: never
+    ports:
+      - "8000:8080"
+    # If you want the Nginx unit status page visible from the
+    # outside of the container add the following port mapping:
+    # - "8001:8081"
+    build:
+      context: .
+      dockerfile: Dockerfile-Plugins
+  netbox-worker:
+    image: netbox:latest-plugins
+    pull_policy: never
+    healthcheck:
+      # Time for which the health check can fail after the container is started.
+      # This depends mostly on the performance of your database. On the first start,
+      # when all tables need to be created the start_period should be higher than on
+      # subsequent starts. For the first start after major version upgrades of NetBox
+      # the start_period might also need to be set higher.
+      # Default value in our docker-compose.yml is 60s
+      start_period: 300s
+    environment:
+      SKIP_SUPERUSER: "false"
+      SUPERUSER_API_TOKEN: "aaa"
+      SUPERUSER_EMAIL: "netbox@local.com"
+      SUPERUSER_NAME: "netbox"
+      SUPERUSER_PASSWORD: "pdEpsCzU9K8D!"
+      
 EOF
 
-cat > environments/local.env << 'EOF'
-# This should be limited to the hosts that are going to be the web app.
-# https://docs.djangoproject.com/en/3.2/ref/settings/#allowed-hosts
-NAUTOBOT_ALLOWED_HOSTS=*
-NAUTOBOT_BANNER_TOP="Local"
-NAUTOBOT_CHANGELOG_RETENTION=0
-NAUTOBOT_CONFIG=/opt/nautobot/nautobot_config.py
-NAUTOBOT_DB_HOST=db
-NAUTOBOT_DB_NAME=nautobot
-NAUTOBOT_DB_USER=nautobot
-NAUTOBOT_DEBUG=True
-NAUTOBOT_DJANGO_EXTENSIONS_ENABLED=False
-NAUTOBOT_DJANGO_TOOLBAR_ENABLED=False
-NAUTOBOT_HIDE_RESTRICTED_UI=True
-NAUTOBOT_LOG_LEVEL=WARNING
-NAUTOBOT_METRICS_ENABLED=True
-NAUTOBOT_NAPALM_TIMEOUT=5
-NAUTOBOT_MAX_PAGE_SIZE=0
+cat > Dockerfile-Plugins << 'EOF'
+FROM netboxcommunity/netbox:latest
 
-# Postgres Container
-POSTGRES_USER=${NAUTOBOT_DB_USER}
-POSTGRES_DB=${NAUTOBOT_DB_NAME}
+COPY ./plugin_requirements.txt /opt/netbox/
+RUN /usr/local/bin/uv pip install -r /opt/netbox/plugin_requirements.txt
 
-# NAUTOBOT REDIS SETTINGS
-# When updating NAUTOBOT_REDIS_PASSWORD, make sure to update the password in
-# the NAUTOBOT_CACHEOPS_REDIS line as well!
-#
-NAUTOBOT_REDIS_HOST=redis
-NAUTOBOT_REDIS_PORT=6379
-# Uncomment REDIS_SSL if using SSL
-# NAUTOBOT_REDIS_SSL=True
-
-# Needed for MySQL, should match the values for Nautobot above
-MYSQL_USER=nautobot
-MYSQL_DATABASE=nautobot
-
-# LDAP environment variables
-NAUTOBOT_AUTH_LDAP_SERVER_URI="changeme"
-NAUTOBOT_AUTH_LDAP_BIND_DN="changeme"
-NAUTOBOT_AUTH_LDAP_BIND_PASSWORD="changeme"
-
-# CSRF_TRUSTED_ORIGINS is a Django security setting that protects against Cross-Site Request Forgery (CSRF) attacks.
-NAUTOBOT_CSRF_TRUSTED_ORIGINS=http://localhost:8080,http://127.0.0.1:8080
-NAUTOBOT_CORS_ALLOWED_ORIGINS=http://localhost:8080,http://127.0.0.1:8080
+# These lines are only required if your plugin has its own static files.
+COPY configuration/configuration.py /etc/netbox/config/configuration.py
+COPY configuration/plugins.py /etc/netbox/config/plugins.py
+RUN DEBUG="true" SECRET_KEY="dummydummydummydummydummydummydummydummydummydummy" \
+    /opt/netbox/venv/bin/python /opt/netbox/netbox/manage.py collectstatic --no-input
 EOF
 
-# Install NAUTOBOT 
-curl -sSL https://install.python-poetry.org | python3 -
-export PATH="$HOME/.local/bin:$PATH"  # Ensure if needed
-poetry install # Installed Nautobot + Invoke + 100+ dependencies
-eval "$(poetry env activate)"  # Activates current shell (prints source command for eval)
-invoke build
-invoke start
+cat > /plugin_requirements.txt << 'EOF'
+netbox-secrets
+netboxlabs-netbox-branching
+netbox-documents
+netbox-attachments
+netbox-topology-views
+nb-service
+netbox-floorplan-plugin
+netbox-config-diff
+
+EOF
+
+cat > configuration/plugins.py << 'EOF'
+# Add your plugins and plugin settings here.
+# Of course uncomment this file out.
+
+# To learn how to build images with your required plugins
+# See https://github.com/netbox-community/netbox-docker/wiki/Using-Netbox-Plugins
+
+# PLUGINS = ["netbox_bgp"]
+
+# PLUGINS_CONFIG = {
+#   "netbox_bgp": {
+#     ADD YOUR SETTINGS HERE
+#   }
+# }
+PLUGINS = ["netbox_secrets"]
+PLUGINS = ["netbox_branching"]
+PLUGINS = ["netbox_documents"]
+PLUGINS = ['netbox_attachments']
+PLUGINS = ["netbox_topology_views"]
+PLUGINS = ['nb_service']
+PLUGINS = ['netbox_floorplan']
+PLUGINS = ["netbox_config_diff"]
+
+PLUGINS_CONFIG = {
+  "netbox_config_diff": {
+    "USERNAME": "foo",
+    "PASSWORD": "bar",
+    "AUTH_SECONDARY": "foobar",        # (optional)
+    "PATH_TO_SSH_CONFIG_FILE": "/home/.ssh/config"  # (optional)
+  }
+}
+
+EOF
+
+cat >> configuration/configuration.py << 'EOF'
+
+from netbox_branching.utilities import DynamicSchemaDict
+
+DATABASES = DynamicSchemaDict({
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'netbox',               # Database name
+        'USER': 'netbox',               # PostgreSQL username
+        'PASSWORD': 'J5brHrAXFLQSif0K', # PostgreSQL password
+        'HOST': 'postgres',             # Database server
+        'PORT': '',                     # Database port (leave blank for default)
+        'CONN_MAX_AGE': 300,            # Max database connection age
+    }
+})
+
+DATABASE_ROUTERS = [
+    'netbox_branching.database.BranchAwareRouter',
+]
+
+EOF
+
+docker compose up -d
 docker ps
 echo "sleep 60..."
 sleep 60
@@ -101,11 +136,3 @@ docker ps
 echo "sleep 60..."
 sleep 60
 docker ps
-echo "sleep 60..."
-sleep 60
-docker ps
-echo "sleep 60..."
-sleep 60
-docker ps
-echo "sleep 60..."
-sleep 60
